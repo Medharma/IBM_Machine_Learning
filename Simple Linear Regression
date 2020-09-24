@@ -3,15 +3,14 @@ import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 %matplotlib inline
-import wget
+
 
 #downloading data file
-url='https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/ML0101ENv3/labs/FuelConsumptionCo2.csv'
-store='-O FuelConsumption.csv'
-wget.download(url,store)
+!wget -O FuelConsumption.csv  https://s3-api.us-geo.objectstorage.softlayer.net/cf-courses-data/CognitiveClass/ML0101ENv3/labs/FuelConsumptionCo2.csv
+
 
 #Reading data
-df=pd.read.csv("FuelConsumption.csv")
+df=pd.read_csv("FuelConsumption.csv")
 df.head()
 
 #Data Exploration
@@ -71,10 +70,10 @@ plt.title('Emission vs engine size with regression  line')
 plt.show()
 
 #EVALUATION WITH TEST DATASETS
-from skylearn.metrics import r2_score
+from sklearn.metrics import r2_score
 test_x=np.asanyarray(test[['ENGINESIZE']])
 test_y=np.asanyarray(test[['CO2EMISSIONS']])
-test_y_= regr.predict(test_x, test_y)
+test_y_= regr.predict(test_x)
 
 print("Mean Absoulte Error: %.2f" %np.mean(np.absolute(test_y_-test_y)) )
 print("Residual Sum of squares: %.2f" %np.mean((test_y_-test_y)**2) )
